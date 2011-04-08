@@ -5,14 +5,14 @@ goto :eof
 */
 
 function zip(zipfile, files) {
-  var fso = new ActiveXObject("Scripting.FileSystemObject");
-  var shell = new ActiveXObject("Shell.Application");
+  var fso = new ActiveXObject('Scripting.FileSystemObject');
+  var shell = new ActiveXObject('Shell.Application');
 
   var process_id = get_process_id();
 
   // create empty zip (right click -> new file -> compressed (zipped) folder)
   var ozip = fso.CreateTextFile(zipfile, true);
-  ozip.Write("PK\x05\x06\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00");
+  ozip.Write('PK\x05\x06\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00');
   ozip.Close();
 
   // copy to zip (drop files to zip folder)
@@ -50,12 +50,12 @@ function zip(zipfile, files) {
 }
 
 function get_process_id() {
-  var shell = WScript.CreateObject("WScript.Shell");
-  var p = shell.Exec("cmd.exe");
-  var wmi = GetObject("winmgmts://./root/cimv2");
-  var e = new Enumerator(wmi.ExecQuery("SELECT * FROM Win32_Process WHERE ProcessId = " + p.ProcessID));
+  var shell = WScript.CreateObject('WScript.Shell');
+  var p = shell.Exec('cmd.exe');
+  var wmi = GetObject('winmgmts://./root/cimv2');
+  var e = new Enumerator(wmi.ExecQuery('SELECT * FROM Win32_Process WHERE ProcessId = ' + p.ProcessID));
   var process_id = null;
-  for ( ; !e.atEnd(); e.moveNext()) {
+  for (; !e.atEnd(); e.moveNext()) {
     var item = e.item();
     process_id = item.ParentProcessId;
   }
@@ -65,8 +65,8 @@ function get_process_id() {
 }
 
 function thread_count(process_id) {
-  var wmi = GetObject("winmgmts://./root/cimv2");
-  var res = wmi.ExecQuery("SELECT * FROM Win32_Thread WHERE ProcessHandle = " + process_id);
+  var wmi = GetObject('winmgmts://./root/cimv2');
+  var res = wmi.ExecQuery('SELECT * FROM Win32_Thread WHERE ProcessHandle = ' + process_id);
   return res.Count;
 }
 

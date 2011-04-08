@@ -21,14 +21,24 @@ IF "%1" == "-a" (
   GOTO :PARSEOPT
 )
 
-IF "%1" == "" (
-  echo usage: which [options] filename
-  echo   -h --help    print this text
-  echo   -a           print all matching pathname of each argument
-  GOTO :EOF
+SET NAME=%1
+
+IF "%OPT_HELP%" == "1" (
+  GOTO :USAGE
+)
+IF "%NAME%" == "" (
+  GOTO :USAGE
 )
 
-SET NAME=%1
+GOTO :MAIN
+
+:USAGE
+echo usage: which [options] filename
+echo   -h --help    print this text
+echo   -a           print all matching pathname of each argument
+GOTO :EOF
+
+:MAIN
 
 SET DOTPATH=.;%PATH%
 
