@@ -65,7 +65,7 @@ function main() {
   zipfile = args.args[0];
   destdir = args.option.destdir;
   if (destdir === null) {
-    destdir = ".";
+    destdir = '.';
   }
   unzip(zipfile, destdir);
 }
